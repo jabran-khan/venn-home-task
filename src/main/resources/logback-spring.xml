@@ -1,0 +1,30 @@
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <!-- 1. Let Spring pull properties from application.yml/properties -->
+    <springProperty scope="context" name="LOG_LEVEL" source="logging.level.root" defaultValue="INFO"/>
+
+    <!-- 2. Human Readable Console Pattern -->
+    <appender name="CONSOLE_TEXT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n%ex</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 3. Machine Readable JSON Pattern -->
+    <appender name="CONSOLE_JSON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.JsonEncoder" />
+    </appender>
+
+    <!-- 4. Environment-driven Appender Routing using Spring Profiles -->
+    <root level="${LOG_LEVEL}">
+        <springProfile name="production,staging">
+            <appender-ref ref="CONSOLE_JSON" />
+        </springProfile>
+        <springProfile name="!production &amp; !staging">
+            <appender-ref ref="CONSOLE_TEXT" />
+        </springProfile>
+    </root>
+
+    <!-- Silence talkative internal framework diagnostics -->
+    <logger name="org.springframework" level="WARN" />
+</configuration>
