@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    # Uses a separate, dedicated in-memory DB name for tests to prevent collision
+    url: jdbc:h2:mem:venndb_test;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+  jpa:
+    hibernate:
+      # Ensures a clean slate for test runs
+      ddl-auto: create-drop
+    show-sql: false
+  h2:
+    console:
+      enabled: false
+
+# Keeps test logs concise
+logging:
+  level:
+    root: WARN
+    com.jabrankhan.interview.venn_home_task: INFO
+
+# Explicit limits configuration for testing scenarios
+app:
+  limits:
+    max-funds-per-day: 3
+    daily-limit: 5000.00
+    weekly-limit: 20000.00
