@@ -27,9 +27,10 @@ logging:
     org.springframework: WARN
 
 server:
-  port: 8080
+  port: 8083
 
 app:
   limits:
+    max-funds-per-day: 3
     daily-limit: 5000
     weekly-limit: 20000

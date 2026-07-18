@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -33,6 +34,7 @@ public class FileStreamingService {
 
         int totalLines = 0;
         int success = 0;
+        int ignored = 0;
         int rejected = 0;
         int errors = 0;
 
@@ -51,7 +53,14 @@ public class FileStreamingService {
                 try {
                     LoadRequest request = objectMapper.readValue(line, LoadRequest.class);
 
-                    LoadResponse response = loadFundService.loadFunds(request);
+                    Optional<LoadResponse> responseOptional = loadFundService.loadFunds(request);
+
+                    if (responseOptional.isEmpty()) {
+                        ignored++;
+                        continue;
+                    }
+
+                    LoadResponse response = responseOptional.get();
                     if (response.accepted()) {
                         success++;
                     } else {
@@ -71,6 +80,6 @@ public class FileStreamingService {
             throw new FileReadException("Failed to read the input file", e);
         }
 
-        return new FileStreamingSummary(totalLines, success, rejected, errors);
+        return new FileStreamingSummary(totalLines, success, ignored, rejected, errors);
     }
 }

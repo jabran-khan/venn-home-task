@@ -8,5 +8,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CustomerLimitRepository extends JpaRepository<CustomerLimit, UUID> {
-    Optional<CustomerLimit> findByCustomerIdAndDay(String customerId, LocalDate day);
+    Optional<CustomerLimit> findByCustomerIdAndCurrentDay(String customerId, LocalDate currentDay);
 }

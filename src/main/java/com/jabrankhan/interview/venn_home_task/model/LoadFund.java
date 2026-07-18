@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "load_funds")
+@Table(name = "load_fund")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,7 +29,7 @@ public class LoadFund {
     @Column(name = "load_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal loadAmount;
 
-    @Column(name = "transaction_time", nullable = false)
+    @Column(name = "time", nullable = false)
     private ZonedDateTime time;
 
     // we want to store every input in the database

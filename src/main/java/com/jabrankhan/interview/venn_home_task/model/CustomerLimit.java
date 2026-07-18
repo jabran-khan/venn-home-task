@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Table(
-        name = "customer_limits",
+        name = "customer_limit",
         uniqueConstraints = @UniqueConstraint(columnNames = {"customer_id", "current_day"})
 )
 @Getter
@@ -31,6 +31,9 @@ public class CustomerLimit {
 
     @Column(name = "current_day", nullable = false)
     private LocalDate currentDay;
+
+    @Column(name = "daily_load_count", nullable = false)
+    private int dailyLoadCount = 0;
 
     @Column(name = "daily_total_amount", nullable = false)
     private BigDecimal dailyTotalAmount = BigDecimal.ZERO;

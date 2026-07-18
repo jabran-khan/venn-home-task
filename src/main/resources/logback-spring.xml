@@ -1,5 +1,6 @@
 <configuration scan="true" scanPeriod="30 seconds">
 
+
     <!-- 1. Let Spring pull properties from application.yml/properties -->
     <springProperty scope="context" name="LOG_LEVEL" source="logging.level.root" defaultValue="INFO"/>
 
@@ -16,14 +17,17 @@
     </appender>
 
     <!-- 4. Environment-driven Appender Routing using Spring Profiles -->
-    <root level="${LOG_LEVEL}">
-        <springProfile name="production,staging">
+    <springProfile name="production,staging">
+        <root level="${LOG_LEVEL}">
             <appender-ref ref="CONSOLE_JSON" />
-        </springProfile>
-        <springProfile name="!production &amp; !staging">
+        </root>
+    </springProfile>
+
+    <springProfile name="!production &amp; !staging">
+        <root level="${LOG_LEVEL}">
             <appender-ref ref="CONSOLE_TEXT" />
-        </springProfile>
-    </root>
+        </root>
+    </springProfile>
 
     <!-- Silence talkative internal framework diagnostics -->
     <logger name="org.springframework" level="WARN" />
