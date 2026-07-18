@@ -27,7 +27,7 @@ logging:
     org.springframework: WARN
 
 server:
-  port: 8083
+  port: 8088
 
 app:
   limits:

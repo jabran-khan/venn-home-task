@@ -34,8 +34,8 @@ public class LoadFundService {
     @Value("${app.limits.weekly-max:20000.00}")
     private BigDecimal weeklyMaxLimit;
 
-    public LoadFundService(LoadFundRepository loadFundsProcessor, CustomerLimitRepository limitRepository) {
-        this.loadFundRepository = loadFundsProcessor;
+    public LoadFundService(LoadFundRepository loadFundRepository, CustomerLimitRepository limitRepository) {
+        this.loadFundRepository = loadFundRepository;
         this.limitRepository = limitRepository;
     }
 
@@ -84,6 +84,7 @@ public class LoadFundService {
     }
 
     private CustomerLimit createNewDayLimit(String customerId, LocalDate date, ZonedDateTime fundTime) {
+        log.info("creating new daily limit entry for customer {} on date {}", customerId, date);
         CustomerLimit newLimit = new CustomerLimit();
         newLimit.setCustomerId(customerId);
         newLimit.setCurrentDay(date);
